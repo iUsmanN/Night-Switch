@@ -16,7 +16,8 @@ struct toggle_clock_view: View {
             Color.black
             GeometryReader { gp in
                 ZStack {
-                    Text("\(dateInRange(current:date))")
+//                    Text("\(dateInRange(current:date)), \(date.formatted())")
+//                        .foregroundColor(.white)
                     RoundedRectangle(cornerRadius: gp.size.height)
                         .stroke(.gray, lineWidth: 1)
                         .padding(3)
@@ -37,11 +38,14 @@ struct toggle_clock_view: View {
         let hour = calendar.component(.hour, from: current)
         let minute = calendar.component(.minute, from: current)
         
-        let nightStartMinutes: Double = 420 //6pm
-        let nightEndMinutes: Double = 450 //7pm
+        let nightStartMinutes: Double = 990 //6pm
+        let nightEndMinutes: Double = 1380 //7pm
         
         let currentNightMinutes: Double = Double(((hour*60)+minute))
-        let floatPercentage = (currentNightMinutes-nightStartMinutes)/(nightEndMinutes-nightStartMinutes)
+        var floatPercentage = (currentNightMinutes-nightStartMinutes)/(nightEndMinutes-nightStartMinutes)
+        
+        floatPercentage = max(0, floatPercentage)
+        floatPercentage = min(1.0, floatPercentage)
         
         return floatPercentage
     }
